@@ -93,6 +93,15 @@ public class MainFormController implements Initializable
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(this.mainTable.getScene().getWindow());
 
+        GadgetFormController controller = loader.getController();
+        controller.setGadget((Gadget)this.mainTable.getSelectionModel().getSelectedItem());
+
         stage.showAndWait();
+
+        if (controller.getModalResult())
+        {
+            int index = this.mainTable.getSelectionModel().getSelectedIndex();
+            this.mainTable.getItems().set(index, controller.getGadget());
+        }
     }
 }

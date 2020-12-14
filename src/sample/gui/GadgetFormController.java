@@ -132,7 +132,7 @@ public class GadgetFormController implements Initializable
         return modalResult;
     }
 
-    public void setFood(Gadget gadget) {
+    public void setGadget(Gadget gadget) {
         // делаем так что если объект редактируется, то нельзя переключать тип
         this.cmdGadgetType.setDisable(gadget != null);
         if (gadget != null) {
