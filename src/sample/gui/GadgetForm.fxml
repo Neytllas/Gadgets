@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="mainPane" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="371.0" spacing="10.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.gui.GadgetFormController">
+   <children>
+      <ChoiceBox fx:id="cmdGadgetType" prefHeight="31.0" prefWidth="294.0" />
+      <HBox prefHeight="47.0" prefWidth="281.0" spacing="10.0">
+         <children>
+            <Label prefWidth="108.0" text="Название" />
+            <TextField fx:id="txtTitle" prefHeight="31.0" prefWidth="141.0" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <HBox prefHeight="47.0" prefWidth="281.0" spacing="10.0">
+         <children>
+            <Label prefHeight="21.0" prefWidth="121.0" text="Размер дисплея" />
+            <TextField fx:id="txtDisplaySize" prefHeight="31.0" prefWidth="141.0" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <VBox fx:id="smartphonePane" prefHeight="148.0" prefWidth="313.0" spacing="10.0">
+         <children>
+            <CheckBox fx:id="chkSim" mnemonicParsing="false" text="2 слота под sim карту" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="169.0" text="Мощность батареи" />
+                  <TextField fx:id="txtBattery" prefHeight="31.0" prefWidth="141.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="58.0" prefWidth="281.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="67.0" text="Тип" />
+                  <ChoiceBox fx:id="cmbSmartphoneType" prefHeight="31.0" prefWidth="235.0" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="10.0" top="20.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="notebookPane" prefHeight="153.0" prefWidth="313.0" spacing="10.0">
+         <children>
+            <CheckBox fx:id="chkKeyBacklight" mnemonicParsing="false" text="клавиатура с подстветкой">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </CheckBox>
+            <HBox prefHeight="47.0" prefWidth="281.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="147.0" text="Количество ядер" />
+                  <TextField fx:id="txtCore" prefHeight="31.0" prefWidth="141.0" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="47.0" prefWidth="281.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="217.0" text="Объем жесткого диска" />
+                  <TextField fx:id="txtHardDisck" prefHeight="31.0" prefWidth="141.0" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="10.0" top="20.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="tabletPane" prefHeight="113.0" prefWidth="343.0" spacing="10.0">
+         <children>
+            <CheckBox fx:id="chkWithCamera" mnemonicParsing="false" text="с камерой" />
+            <HBox prefHeight="47.0" prefWidth="281.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="21.0" prefWidth="103.0" text="DPI экрана" />
+                  <TextField fx:id="txtDPI" prefHeight="31.0" prefWidth="135.0" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="10.0" top="20.0" />
+         </padding>
+      </VBox>
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#onSaveClick" prefHeight="31.0" prefWidth="123.0" text="Сохранить">
+               <HBox.margin>
+                  <Insets right="150.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onCancelClick" prefHeight="31.0" prefWidth="104.0" text="Отмена" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>
