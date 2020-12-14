@@ -140,13 +140,13 @@ public class GadgetFormController implements Initializable
             this.txtTitle.setText(String.valueOf(gadget.getTitle()));
             this.txtDisplaySize.setText(String.valueOf(gadget.getDisplaySize()));
 
-            if (gadget instanceof Gadget)
+            if (gadget instanceof Smartphone)
             { // если смартфон
-                this.cmdGadgetType.setValue(GADGET_SMARTPHONE);
-                this.cmbSmartphoneType.setValue(((Smartphone)gadget).type);
-                this.chkSim.setSelected(((Smartphone)gadget).withSimSlot);
-                this.txtBattery.setText(String.valueOf(((Smartphone)gadget).getBatteryPower()));
-                Integer.parseInt(txtBattery.getText());
+                this.cmdGadgetType.setValue(GADGET_SMARTPHONE); // вызываю тип
+                this.cmbSmartphoneType.setValue(((Smartphone)gadget).type); // тип смарт
+                this.chkSim.setSelected(((Smartphone)gadget).withSimSlot); // симка
+                this.txtBattery.setText(String.valueOf(((Smartphone)gadget).getBatteryPower())); // батарея
+                Integer.parseInt(txtBattery.getText()); //парс
 
             }
             else if (gadget instanceof Notebook)
@@ -154,12 +154,16 @@ public class GadgetFormController implements Initializable
                 this.cmdGadgetType.setValue(GADGET_NOTEBOOK);
                 this.chkKeyBacklight.setSelected(((Notebook)gadget).withKeyBacklight);
                 this.txtCore.setText(String.valueOf(((Notebook)gadget).getNumberOfCores()));
+                Integer.parseInt(txtCore.getText());
                 this.txtHardDisk.setText(String.valueOf(((Notebook)gadget).getHardDiskSpace()));
+                Integer.parseInt(txtHardDisk.getText());
             }
             else if (gadget instanceof Tablet)
             { // если планшет
+                this.cmdGadgetType.setValue(GADGET_TABLET);
                 this.chkWithCamera.setSelected(((Tablet)gadget).camera);
                 this.txtDPI.setText(String.valueOf(((Tablet)gadget).getDPI()));
+                Integer.parseInt(txtDPI.getText());
             }
         }
     }
