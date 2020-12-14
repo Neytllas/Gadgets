@@ -17,7 +17,7 @@ public class Gadget
         return String.format("%s: %s размер дисплея", this.getTitle(), this.getDisplaySize());
     }
 
-    public String getDisplaySize()
+    public int getDisplaySize()
     {
         return displaySize;
     }

@@ -138,14 +138,14 @@ public class GadgetFormController implements Initializable
         if (gadget != null) {
 
             this.txtTitle.setText(String.valueOf(gadget.getTitle()));
-            this.txtDisplaySize.setText(gadget.getDisplaySize());
+            this.txtDisplaySize.setText(String.valueOf(gadget.getDisplaySize()));
 
             if (gadget instanceof Gadget)
             { // если смартфон
                 this.cmdGadgetType.setValue(GADGET_SMARTPHONE);
                 this.cmbSmartphoneType.setValue(((Smartphone)gadget).type);
                 this.chkSim.setSelected(((Smartphone)gadget).withSimSlot);
-                this.txtBattery.setText(((Smartphone)gadget).getBatteryPower());
+                this.txtBattery.setText(String.valueOf(((Smartphone)gadget).getBatteryPower()));
                 Integer.parseInt(txtBattery.getText());
 
             }
@@ -153,13 +153,13 @@ public class GadgetFormController implements Initializable
             { // если ноут
                 this.cmdGadgetType.setValue(GADGET_NOTEBOOK);
                 this.chkKeyBacklight.setSelected(((Notebook)gadget).withKeyBacklight);
-                this.txtCore.setText(((Notebook)gadget).getNumberOfCores());
-                String.valueOf(this.txtHardDisk.setText(((Notebook)gadget).getHardDiskSpace()));
+                this.txtCore.setText(String.valueOf(((Notebook)gadget).getNumberOfCores()));
+                this.txtHardDisk.setText(String.valueOf(((Notebook)gadget).getHardDiskSpace()));
             }
-            else if (gadget instanceof )
+            else if (gadget instanceof Tablet)
             { // если планшет
                 this.chkWithCamera.setSelected(((Tablet)gadget).camera);
-                this.txtDPI.setText(((Tablet)gadget).getDPI());
+                this.txtDPI.setText(String.valueOf(((Tablet)gadget).getDPI()));
             }
         }
     }
