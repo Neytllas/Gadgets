@@ -13,10 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import sample.models.Gadget;
-import sample.models.Notebook;
-import sample.models.Smartphone;
-import sample.models.Tablet;
+import sample.models.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,6 +21,7 @@ import java.util.ResourceBundle;
 
 public class GadgetFormController implements Initializable
 {
+    public GadgetModel gadgetModel;
 
     // общее
     public ChoiceBox cmdGadgetType;
@@ -51,9 +49,9 @@ public class GadgetFormController implements Initializable
     final String GADGET_NOTEBOOK = "Ноутбук";
     final String GADGET_TABLET = "Планшет";
 
-    private Boolean modalResult = false;
     private Node mainTable;
 
+    private  Integer id = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -116,25 +114,30 @@ public class GadgetFormController implements Initializable
 
     public void onSaveClick(ActionEvent actionEvent)
     {
-        this.modalResult = true;
-        ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).close();
+        if (this.id != null)
+        {
+            Gadget gadget = getGadget();
+            gadget.id = this.id;
+            this.gadgetModel.edit(gadget);
+        }
+        else
+        {
+            this.gadgetModel.add(getGadget());
+        }
+        ((Stage)((Node) actionEvent.getSource()).getScene().getWindow()).close();
     }
 
     public void onCancelClick(ActionEvent actionEvent)
     {
-        this.modalResult = false;
         ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow()).close();
-    }
-
-
-    public Boolean getModalResult()
-    {
-        return modalResult;
     }
 
     public void setGadget(Gadget gadget) {
         // делаем так что если объект редактируется, то нельзя переключать тип
         this.cmdGadgetType.setDisable(gadget != null);
+
+        this.id = gadget !=null ? gadget.id : null;
+
         if (gadget != null) {
 
             this.txtTitle.setText(String.valueOf(gadget.getTitle()));
@@ -183,6 +186,7 @@ public class GadgetFormController implements Initializable
                         (Smartphone.Type) this.cmbSmartphoneType.getValue(),
                         Integer.parseInt(txtBattery.getText()),
                         this.chkSim.isSelected());
+                break;
 
             case GADGET_NOTEBOOK:
                 result = new Notebook(
@@ -191,6 +195,7 @@ public class GadgetFormController implements Initializable
                         this.chkKeyBacklight.isSelected(),
                         Integer.parseInt(txtCore.getText()),
                         Integer.parseInt(txtHardDisk.getText()));
+                break;
 
             case GADGET_TABLET:
                 result = new Tablet(
@@ -198,6 +203,7 @@ public class GadgetFormController implements Initializable
                         title,
                         this.chkWithCamera.isSelected(),
                         Integer.parseInt(txtDPI.getText()));
+                break;
         }
         return result;
     }

@@ -8,35 +8,35 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.models.Gadget;
-import sample.models.Notebook;
-import sample.models.Smartphone;
-import sample.models.Tablet;
+import sample.models.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable
 {
     public TableView mainTable;
-    // создали список
-    ObservableList<Gadget> gadgetList = FXCollections.observableArrayList();
+
+    GadgetModel gadgetModel = new GadgetModel();
 
     @Override
     public  void initialize (URL location, ResourceBundle resources)
     {
-        // заполнили список данными
-        gadgetList.add(new Tablet(250,"Lenovo Tab4",true, 255));
-        gadgetList.add(new Notebook(650, "Lenovo", false, 64,2000));
-        gadgetList.add(new Smartphone(120, "Lenovo", Smartphone.Type.android, 200, false));
+        gadgetModel.addDataChangedListener(gadget ->
+        {
+            mainTable.setItems(FXCollections.observableArrayList(gadget));
+        });
 
-        mainTable.setItems(gadgetList);
+        gadgetModel.load(); // метож загрузки данных
 
         TableColumn<Gadget, String> titleColumn = new TableColumn<>("Название");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -71,15 +71,14 @@ public class MainFormController implements Initializable
         // блокировка окна на которое мы нажали
         stage.initOwner(this.mainTable.getScene().getWindow());
 
+        // контроллер
+        GadgetFormController controller = loader.getController();
+
+        // передача модели
+        controller.gadgetModel = gadgetModel;
+
         // открываем окно и ждем пока его закроют
         stage.showAndWait();
-
-        GadgetFormController controller = loader.getController();
-        if (controller.getModalResult())
-        {
-            Gadget newGadget = controller.getGadget();
-            this.gadgetList.add(newGadget);
-        }
     }
 
     public void onEditClick(ActionEvent actionEvent) throws IOException
@@ -95,13 +94,32 @@ public class MainFormController implements Initializable
 
         GadgetFormController controller = loader.getController();
         controller.setGadget((Gadget)this.mainTable.getSelectionModel().getSelectedItem());
+        controller.gadgetModel = gadgetModel;
 
         stage.showAndWait();
+    }
 
-        if (controller.getModalResult())
+    public void onDeleteClick(ActionEvent actionEvent)
+    {
+        Gadget gadget = (Gadget) this.mainTable.getSelectionModel().getSelectedItem();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Подьверждение");
+        alert.setHeaderText(String.format("Точно удалить %s?" , gadget.getTitle()));
+
+        Optional<ButtonType> option = alert.showAndWait();
+        if (option.get() == ButtonType.OK)
         {
-            int index = this.mainTable.getSelectionModel().getSelectedIndex();
-            this.mainTable.getItems().set(index, controller.getGadget());
+            gadgetModel.delete((gadget.id));
         }
+    }
+
+    public void onSaveToFileClick(ActionEvent actionEvent)
+    {
+        gadgetModel.saveToFile("data.json");
+    }
+
+    public void onLoadToFileClick(ActionEvent actionEvent)
+    {
     }
 }

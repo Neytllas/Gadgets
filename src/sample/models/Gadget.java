@@ -4,6 +4,7 @@ public class Gadget
 {
     public int displaySize; // размер дисплея
     public String title; // название
+    public Integer id = null; // идентификатор
 
     public Gadget(int display_size, String title)
     {
