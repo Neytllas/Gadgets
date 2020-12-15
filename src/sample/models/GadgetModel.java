@@ -1,11 +1,15 @@
 package sample.models;
 
-import java.io.FileWriter;
-import java.io.Writer;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.*;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class GadgetModel
 {
+    Class<? extends Gadget> gadgetFilter = Gadget.class;
     ArrayList<Gadget> gadgetList = new ArrayList<>();
     private int counter = 1; // счетчик
 
@@ -20,8 +24,9 @@ public class GadgetModel
         try (Writer writer = new FileWriter(path))
         {
             ObjectMapper mapper = new ObjectMapper();
-
-            mapper.writerWithDefaultPrettyPrinter().writeValue(writer, gadgetList);
+            mapper.writerFor(new TypeReference<ArrayList<Gadget>>(){})
+                    .withDefaultPrettyPrinter()
+                    .writeValue(writer, gadgetList);
         }
 
         catch (IOException e)
@@ -90,7 +95,12 @@ public class GadgetModel
     {
         for (DataChangedListener listener: dataChangedListener)
         {
-            listener.dataChanged(gadgetList);
+            ArrayList<Gadget> filteredList = new ArrayList<>(
+                    gadgetList.stream()
+                              .filter(gadget -> gadgetFilter.isInstance(gadget))
+                              .collect(Collectors.toList())
+            );
+            listener.dataChanged(filteredList);
         }
     }
 
@@ -104,6 +114,36 @@ public class GadgetModel
                 break;
             }
         }
+
+        this.emitDataChanged();
+    }
+
+    public void loadFromFile (String path)
+    {
+        try (Reader reader = new FileReader(path))
+        {
+            // создаем сериализатор
+            ObjectMapper mapper = new ObjectMapper();
+
+            // читаем из файла
+            gadgetList = mapper.readerFor(new TypeReference<ArrayList<Gadget>>() { })
+                    .readValue(reader);
+
+            this.counter = gadgetList.stream()
+                    .map(gadget -> gadget.id)
+                    .max(Integer::compareTo)
+                    .orElse(0) + 1;
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.emitDataChanged();
+    }
+
+    public void setGadgetFilter(Class<? extends Gadget> gadgetFilter)
+    {
+        this.gadgetFilter = gadgetFilter;
 
         this.emitDataChanged();
     }

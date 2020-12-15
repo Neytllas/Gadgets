@@ -2,6 +2,8 @@ package sample.models;
 
 public class Notebook extends Gadget
 {
+    public Notebook () {};
+
     public Boolean withKeyBacklight; // подсветка клавиатуры
 
     public int numberOfCores; // количество ядер

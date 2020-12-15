@@ -1,7 +1,14 @@
 package sample.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+@JsonIgnoreProperties({"description"})
+
+@JsonTypeInfo(use=JsonTypeInfo.Id.CLASS, include= JsonTypeInfo.As.PROPERTY, property="@class")
 public class Gadget
 {
+    public Gadget () {};
+
     public int displaySize; // размер дисплея
     public String title; // название
     public Integer id = null; // идентификатор

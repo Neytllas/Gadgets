@@ -2,6 +2,8 @@ package sample.models;
 
 public class Tablet extends Gadget
 {
+    public Tablet () {};
+
     public Boolean camera; // наличие камеры
     public int dpi; // dpi экрана
 

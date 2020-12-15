@@ -2,6 +2,8 @@ package sample.models;
 
 public class Smartphone extends Gadget
 {
+    public Smartphone () {};
+
     public enum Type {android, ios, windows;} // какие типы
     public Type type; // тип смартфона
     public Boolean withSimSlot; // количество слотов под sim
